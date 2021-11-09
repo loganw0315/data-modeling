@@ -1,0 +1,69 @@
+user_id
+user_email
+user_password
+recipe_id
+recipe_name
+recipe_ingredients
+recipe_instructions
+recipe_privacy
+grocery_list_id
+grocery_list_name
+occasion_id
+ingredient_id
+ingredient_name
+
+
+//Table Ideas:
+users: User info, each row a different user
+    -user_id: prim key
+    -user_name: string
+    -user_email: string
+    -user_password: string
+
+recipes: Recipe info, each row a diff recipe
+    -recipe_id: prim key
+    -user_id: REF users user_id
+    -recipe_name: string
+    -recipe_instructions: text
+    -recipe_privacy: boolean(true=private, false=public)
+
+recipe_ingredients: Relationship table for recipe ingredients, each row is a diff ingredient and the recipe is on
+    -ingredient_id: REF ingredients ingredient_id
+    -recipe_id: REF recipes recipe_id
+
+ingredients: Ingredient info, each row a diff ingredient
+    -ingredient_id: prim key
+    -ingredient_name: string
+    -ingredient_type: string
+
+grocery_lists: Grocery list info, each row a diff list
+    -grocery_list_id: prim key
+    -user_id: REF users user_id
+    -grocery_list_name: string
+
+
+grocery_list_ingredients: Relationship table for grocery list ingredients, each row is a diff ingredient and the list it is on 
+    -ingredient_id: REF ingredients ingredient_id
+    -grocery_list_id: REF grocery_lists grocery_list_id
+
+occasions: Occasion info, each row is a different Occasion
+    -occasion_id: prim key
+    -occasion_name: string
+    -user_id: REF users user_id
+    -recipe_id: REF recipes recipe_id
+
+
+//Relationships:
+one-to-one:
+
+
+one-to-many:
+    users -> recipes
+    users -> grocery_lists
+    users -> occasions
+    recipes -> occasions
+
+many-to-many:
+    grocery_lists -> ingredients
+    recipes -> ingredients
+    recipes -> occasions
